@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="RestoBorne.Api/RestoBorne.Api.csproj" />
+  <Project Path="RestoBorne.Application/RestoBorne.Application.csproj" />
+  <Project Path="RestoBorne.Domain/RestoBorne.Domain.csproj" />
+  <Project Path="RestoBorne.Infrastructure/RestoBorne.Infrastructure.csproj" />
+</Solution>
