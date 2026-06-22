@@ -6,7 +6,7 @@ namespace RestoBorne.Domain.Entities
 {
     public class Product
     {
-        public Guid ProductId { get; set; }
+        public Guid Id { get; set; }
         public String Name { get; set; } = String.Empty;
 
         public String Description { get; set; } = String.Empty;
