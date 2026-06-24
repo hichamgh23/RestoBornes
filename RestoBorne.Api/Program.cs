@@ -1,4 +1,4 @@
-using RestoBorne.Application.Interfaces; 
+using RestoBorne.Application.Interfaces;
 using RestoBorne.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

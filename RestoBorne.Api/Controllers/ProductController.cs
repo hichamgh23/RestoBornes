@@ -9,19 +9,13 @@ namespace RestoBorne.Api.Controllers
     {
         private readonly IProductRepository _repository;
 
-        // Le constructeur reçoit le repository injecté par .NET
-        public ProductController(IProductRepository repository)
-        {
-            _repository = repository;
-        }
+        public ProductController(IProductRepository repository) { _repository = repository; }
 
-        // La méthode qui répond aux requêtes GET
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var products = await _repository.GetAllAsync();
-            return Ok(products); // Retourne la liste en JSON
+            return Ok(products);
         }
     }
 }
-
