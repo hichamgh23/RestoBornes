@@ -1,19 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RestoBorne.Domain.Entities
 {
     public class Order
     {
-        public Guid Id { get; set; }
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public Guid Id { get; private set; }
+        public DateTime OrderDate { get; private set; }
+        public string Status { get; private set; }
+        public decimal TotalAmount { get; private set; }
 
-        // Utilise un Enum pour éviter les erreurs de saisie
-        public string Status { get; set; } = "Pending";
+        private readonly List<OrderItem> _items = new();
+        public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
 
-        // La relation : Une commande a plusieurs lignes de commande
-        public ICollection<OrderItem> Items { get; set; } = new List<OrderItem>();
+        public Order()
+        {
+            Id = Guid.NewGuid();
+            OrderDate = DateTime.UtcNow;
+            Status = "Pending";
+        }
 
-        public decimal TotalAmount { get; set; }
+        public void AddItem(Guid productId, int quantity, decimal unitPrice)
+        {
+            var item = new OrderItem
+            {
+                Id = Guid.NewGuid(),
+                OrderId = Id,
+                ProductId = productId,
+                Quantity = quantity,
+                UnitPrice = unitPrice
+            };
+
+            _items.Add(item);
+            RecalculateTotal();
+        }
+
+        private void RecalculateTotal()
+        {
+            TotalAmount = _items.Sum(i => i.UnitPrice * i.Quantity);
+        }
     }
 }
