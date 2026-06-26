@@ -23,15 +23,7 @@ namespace RestoBorne.Domain.Entities
 
         public void AddItem(Guid productId, int quantity, decimal unitPrice)
         {
-            var item = new OrderItem
-            {
-                Id = Guid.NewGuid(),
-                OrderId = Id,
-                ProductId = productId,
-                Quantity = quantity,
-                UnitPrice = unitPrice
-            };
-
+            var item = new OrderItem(Id, productId, quantity, unitPrice);
             _items.Add(item);
             RecalculateTotal();
         }
