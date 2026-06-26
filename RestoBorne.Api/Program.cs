@@ -1,9 +1,13 @@
 using RestoBorne.Application.Interfaces;
+using RestoBorne.Application.Services;
 using RestoBorne.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddControllers();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -14,12 +18,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.MapGet("/api/products", async (IProductRepository repository) =>
-{
-    var products = await repository.GetAllAsync();
-    return Results.Ok(products);
-})
-.WithName("GetAllProducts");
-
+app.MapControllers();
 app.Run();
